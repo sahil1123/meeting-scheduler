@@ -62,7 +62,8 @@ func main() {
 		MeetingRoom: meetingRooms,
 	}
 
-	resp := service.MeetingScheduler(req)
+	emailSvc := service.NewEmailNotificationService()
+	resp := service.NewMeetingScheduler(emailSvc).Schedule(req)
 	for _, r := range resp.MeetingResponse {
 		if r.Error {
 			fmt.Printf("error: %s, req: %v \n", r.ErrorMessage, r.Meeting)
